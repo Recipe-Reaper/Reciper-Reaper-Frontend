@@ -1,0 +1,13 @@
+body {
+    background:linear-gradient(to bottom, white, black) no-repeat center center fixed;
+    background-size:cover;
+}
+
+#wrapper {
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:2%;
+    text-align:center;
+    display:block;
+    width:50%;
+}
