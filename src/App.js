@@ -1,27 +1,36 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import './App.css';
-import Home from './Home.js';
+import Nav from "./Navigate.js";
+import Home from "./Home.js";
 import Login from './Login.js';
 import Groceries from './Groceries.js';
+import { useEffect, useState } from 'react';
 
 
 function App() {
+    const [user, setUser] = useState(null);
+    
+    useEffect(() =>{
+      const getUser = () => {setUser(sessionStorage.getItem("user"))};
+    getUser();
+  }, []);
     return (
-        <div id="wrapper">
+        <div>
             <Router>
+                <Nav  user={user}/>
                 <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route 
+                        path="/home"
+                        element={<Home />} />
                     <Route 
                         path="/login"
-                        element={<Login />}
+                        element={user ? <Navigate to="/" /> : <Login />}
                     />
-                    <Route 
+                     <Route 
                         path="/groceries"
-                        element={<Groceries />}
-                    />
-                    <Route 
-                        path="*"
-                        element={<Home />}
+                        element={user ? <Groceries /> : <Navigate to="/login" />}
                     />
                 </Routes>
             </Router>

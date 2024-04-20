@@ -1,37 +1,57 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const Login = function() {
+function Login(){ 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    function sendLoginRequest(e) {
-        e.preventDefault();
-        axios.post("http://localhost:8080/login", {username, password})
-          .then((response) => {
-            sessionStorage.setItem("user", response.data);
-        });
-    }
 
-    return (
-	<div id="wrapper">
-        <img src="reaper.svg" alt="Reaper Image" />
-	    <form onSubmit={sendLoginRequest}>
-            <label for="username">Username:</label>
-            <input type="input" 
-                value={username} onChange = {(e) => setUsername(e.target.value)}
-                name="username" id="username" />
-            <br/>
-			<br/>
-            <label for="password">Password:</label>
-            <input type="input" 
-                value={password} onChange={(e) => setPassword(e.target.value)} 
-                name="password" id="password" />
-            <br/>
-			<br/>
-            <input type="submit" value="Log In" />
-        </form>
-	</div>
+    const github = () => {
+          window.open("http://localhost:5000/auth/github", "_self" );
+};
+    const google = async () => {
+          window.open("http://localhost:5000/auth/google", "_self");
+
+};
+
+    const sendLoginRequest = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/auth/default", {username, password})
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.success) {
+                sessionStorage.setItem("user", response.data);
+            }
+            window.location.reload();
+          });
+};
+
+return (
+        <div className="login">
+            <img src="reaper.png" alt="Reaper Image" className="Reaper Image" />
+            <div className="loginButton default">
+            <form onSubmit={sendLoginRequest}>
+                <section>
+                <input type="input" placeholder = "Username"
+                    value={username} onChange = {(e) => setUsername(e.target.value)}
+                    name="username" id="username" />
+                </section>
+                <br/>
+                <section>
+                <input type="password" placeholder = "Password"
+                    value={password} onChange={(e) => setPassword(e.target.value)} 
+                    name="password" id="password" />
+                </section>
+            <button type="submit" >Sign in</button>
+            </form>
+        </div>
+        <div className="loginButton github" onClick={google}>
+                    Login with Google
+            </div>
+                <div className="loginButton github" onClick={github}>
+                    Login with Github
+            </div>
+        </div>
   );
 }
 

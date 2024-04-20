@@ -10,14 +10,14 @@ const Groceries = function() {
     function addGrocery(e) {
         e.preventDefault();
         user = sessionStorage.getItem("user");
-        axios.post("http://localhost:8080/addGrocery", {foodName, expirationDate, user})
+        axios.post("http://localhost:5000/addGrocery", {foodName, expirationDate, user})
     }
 
     return (
-	<div id="wrapper">
+	<div className="groceryWrapper">
 	    <form onSubmit={addGrocery}>
             <label for="foodName">Food Name:</label>
-            <input type="input" 
+            <input type="input"
                 value={foodName} onChange = {(e) => setFoodName(e.target.value)}
                 name="foodName" id="foodName" />
             <br/>
