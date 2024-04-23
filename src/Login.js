@@ -18,9 +18,8 @@ function Login(){
         e.preventDefault();
         axios.post("http://localhost:5000/auth/default", {username, password})
           .then((response) => {
-            console.log(response.data);
             if (response.data.success) {
-                sessionStorage.setItem("user", response.data);
+                sessionStorage.setItem("user", response.data.user.username);
             }
             window.location.reload();
           });

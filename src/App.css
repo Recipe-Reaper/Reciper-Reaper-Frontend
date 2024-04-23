@@ -107,6 +107,20 @@ input{
 
 }
 
+select{
+  width:100%;
+  height:55px;
+  padding:16px 20px;
+  margin-bottom:20px;
+  border: 1px solid #640909;
+  border-radius:10px;
+  background-color:#CA6C6C;
+  color:#603030;
+  font-size:20px;
+  font-weight:bold;
+
+}
+
 .home{
    background:linear-gradient(to bottom, gray, black) no-repeat center center fixed;
    height:1000px;
@@ -150,7 +164,7 @@ input{
 .button2{
     background-color:#5F1F1F;
     width:500px;
-    height:75px;
+    height:150px;
     border:none;
     border-radius:10px;
     color:#C3C3C3;
