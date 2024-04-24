@@ -18,7 +18,7 @@ return(
          </span>
          {user ? (
              <u1 className="list">
-                <li className="listItem">{user.displayName}</li>
+                <li className="listItem">{user || user.displayName}</li>
                 <li className="listItem" onClick={logoff}>
                 Logout
                 </li>
