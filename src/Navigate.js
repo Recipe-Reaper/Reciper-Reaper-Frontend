@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import axios from 'axios';
 
 const Navigate = ({ user }) =>{
   const logoff = () => {

@@ -7,23 +7,29 @@ const Home = function() {
 		let alertMessage = "";
 		axios.get("http://localhost:5000/viewGroceries", {params: {user, location: buttonLocation}})
 		.then((response) => {
-			if (response.data.goodNames.length != 0) {
-				alertMessage += "Your stored groceries are the following.\n\n";
-				response.data.goodNames.forEach((groceryName) => {
-					const expirationDate = new Date(response.data.goodDates.at(response.data.goodNames.indexOf(groceryName)))
-					alertMessage += groceryName + ", expiring " + expirationDate.toDateString("en-US") + ".\n";
-				})
+			if (!response.data.goodNames && !response.data.expiredNames) {
+				alertMessage = "You are not logged in.";
 			}
-			if (response.data.expiredNames.length != 0) {
-				alertMessage += "\nThe following foods have expired.\n\n"
-				response.data.expiredNames.forEach((groceryName) => {
-					const expirationDate = new Date(response.data.expiredDates.at(response.data.expiredNames.indexOf(groceryName)))
-					alertMessage += groceryName + ", which expired " + expirationDate.toDateString("en-US") + ".\n";
-				})
+			else {
+				if (response.data.goodNames.length === 0 && response.data.expiredNames.length === 0) {
+					alertMessage = "You have no groceries stored here.";
+				}
+				if (response.data.goodNames.length !== 0) {
+					alertMessage += "Your stored groceries are the following.\n\n";
+					response.data.goodNames.forEach((groceryName) => {
+						const expirationDate = new Date(response.data.goodDates.at(response.data.goodNames.indexOf(groceryName)))
+						alertMessage += groceryName + ", expiring " + expirationDate.toDateString("en-US") + ".\n";
+					})
+				}
+				if (response.data.expiredNames.length !== 0) {
+					alertMessage += "\nThe following foods have expired.\n\n"
+					response.data.expiredNames.forEach((groceryName) => {
+						const expirationDate = new Date(response.data.expiredDates.at(response.data.expiredNames.indexOf(groceryName)))
+						alertMessage += groceryName + ", which expired " + expirationDate.toDateString("en-US") + ".\n";
+					})
+				}
 			}
-			if (response.data.goodNames.length === 0 && response.data.expiredNames.length === 0) {
-				alertMessage = "You have no groceries stored here."
-			}
+			
 			alert(alertMessage)});
 	}
 
